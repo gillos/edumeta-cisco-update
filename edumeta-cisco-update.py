@@ -19,7 +19,7 @@ def pollwlc(host,cmty='public'):
 
 def getapcount(wlcs,sep='-'):
 	aps=sum([pollwlc(wlc) for wlc in wlcs],[])
-	return dict(Counter([x.split(sep)[0] for x in aps]))
+	return dict(Counter([x.split(sep)[0].upper() for x in aps]))
 
 def usage():
 	print 'usage:'
@@ -53,10 +53,12 @@ def parseopt(args):
 if __name__ == '__main__':
 	(url,api_key,username,wlcs)=parseopt(sys.argv)
 	c=getapcount(wlcs)
+	print "%s ap:s" % sum(zip(*c.items())[1])
 	r=get("%s?limit=0" % url,headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key':api_key})
 	if r.status_code!=codes.ok: sys.exit()
 	for x in json.loads(r.text)['objects']:
 		if x['ap_no']!=c[x['location_name_se']]:
 			patch("%s%s/" % (url,x['id']),headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key': api_key},data=json.dumps({'ap_no':c[x['location_name_se']]}))
+			print "%s patched" % x['location_name_se']
 		else:
 			print "no change at %s: %s ap:s" % (x['location_name_se'],x['ap_no'])

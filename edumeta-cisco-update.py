@@ -1,8 +1,14 @@
 import json
 import sys
 import getopt
-from requests import *
-from pysnmp.entity.rfc3413.oneliner import cmdgen
+try:
+    from requests import *
+    from pysnmp.entity.rfc3413.oneliner import cmdgen
+except ImportError:
+    print 'this tool requires pysnmp and requests'
+    print 'sudo pip install requests'
+    print 'sudo pip install pysnmp'
+    sys.exit()
 from collections import Counter
 # sudo pip install requests
 # sudo pip install pysnmp	

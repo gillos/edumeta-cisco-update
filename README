@@ -1,0 +1,3 @@
+needs Python 2.7
+and pysnmp
+and requests

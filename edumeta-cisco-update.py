@@ -1,15 +1,15 @@
-import json
 import sys
 import getopt
 try:
-    from requests import *
-    from pysnmp.entity.rfc3413.oneliner import cmdgen
+	from requests import *
+	from pysnmp.entity.rfc3413.oneliner import cmdgen
+	from collections import Counter
+	import json
 except ImportError:
-    print 'this tool requires pysnmp and requests'
-    print 'sudo pip install requests'
-    print 'sudo pip install pysnmp'
-    sys.exit()
-from collections import Counter
+	print 'this tool requires Python 2.7 and pysnmp and requests'
+	print 'sudo pip install requests'
+	print 'sudo pip install pysnmp'
+	sys.exit()
 # sudo pip install requests
 # sudo pip install pysnmp	
 				

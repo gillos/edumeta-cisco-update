@@ -1,3 +1,7 @@
+updates meta database for eduroam https://github.com/berggren/edumeta
+for example https://meta.eduroam.se
+uses data from Cisco Wireless Lan Controllers
+
 needs Python 2.7
 and pysnmp
 and requests

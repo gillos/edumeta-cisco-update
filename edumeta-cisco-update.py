@@ -57,8 +57,8 @@ if __name__ == '__main__':
 	r=get("%s?limit=0" % url,headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key':api_key})
 	if r.status_code!=codes.ok: sys.exit()
 	for x in json.loads(r.text)['objects']:
-		if x['ap_no']!=c[x['location_name_se']]:
-			patch("%s%s/" % (url,x['id']),headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key': api_key},data=json.dumps({'ap_no':c[x['location_name_se']]}))
-			print "%s patched" % x['location_name_se']
+		if x['ap_no']!=c[x['location_shortname']]:
+			patch("%s%s/" % (url,x['id']),headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key': api_key},data=json.dumps({'ap_no':c[x['location_shortname']]}))
+			print "%s patched" % x['location_shortname']
 		else:
-			print "no change at %s: %s ap:s" % (x['location_name_se'],x['ap_no'])
+			print "no change at %s: %s ap:s" % (x['location_shortname'],x['ap_no'])

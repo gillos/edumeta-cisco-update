@@ -65,7 +65,8 @@ if __name__ == '__main__':
 	if r.status_code!=codes.ok: sys.exit()
 	for x in json.loads(r.text)['objects']:
 		location_ap_no=c.get(x['location_shortname'],0)
-		#if location_ap_no==0 it should probably be removed (at least after some time)
+		if location_ap_no==0 and (datetime.datetime.strptime(x['last_updated'],'%Y-%m-%dT%H:%M:%S.%f') < (datetime.datetime.now()-datetime.timedelta(days=60))):
+			delete("/".join(url.split('/')[:3])+x['resource_uri'],headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key':api_key})
 		if x['ap_no']!=location_ap_no:
 			patch("%s%s/" % (url,x['id']),headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key': api_key},data=json.dumps({'ap_no':c[x['location_shortname']]}))
 			print "%s patched" % x['location_shortname']

@@ -74,4 +74,6 @@ if __name__ == '__main__':
 		else:
 			print "no change at %s: %s ap:s" % (x['location_shortname'],x['ap_no'])
 		metacount+=location_ap_no
+		if location_ap_no==0:
+			print x['location_shortname'],"0"
 	print "total ap:s in meta-db: %s" % metacount

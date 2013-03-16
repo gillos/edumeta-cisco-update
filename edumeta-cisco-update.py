@@ -63,6 +63,7 @@ if __name__ == '__main__':
 	print "%s ap:s" % sum([v for k,v in c.items()])
 	r=get("%s?limit=0" % url,headers={'content-type': 'application/json','x-edumeta-username': username,'x-edumeta-api-key':api_key})
 	if r.status_code!=codes.ok: sys.exit()
+	metacount=0
 	for x in json.loads(r.text)['objects']:
 		location_ap_no=c.get(x['location_shortname'],0)
 		if location_ap_no==0 and (datetime.datetime.strptime(x['last_updated'],'%Y-%m-%dT%H:%M:%S.%f') < (datetime.datetime.now()-datetime.timedelta(days=60))):
@@ -72,3 +73,5 @@ if __name__ == '__main__':
 			print "%s patched" % x['location_shortname']
 		else:
 			print "no change at %s: %s ap:s" % (x['location_shortname'],x['ap_no'])
+		metacount+=location_ap_no
+	print "total ap:s in meta-db: %s" % metacount
